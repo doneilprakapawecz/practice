@@ -40,6 +40,15 @@ body {
   border: 1px solid red;
   margin: 2px;
   border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.list-element:hover {
+  cursor: pointer;
+  background-color: #e1b83b;
+  border: 2px solid #219653;
+  color: #044b22;
+  font-size: 20px;
 }
 
 .main {
