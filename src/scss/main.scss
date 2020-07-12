@@ -63,6 +63,9 @@ body {
   padding: 0;
   border-radius: 12px;
   margin-top: 19px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .buttons-section {
@@ -125,4 +128,20 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+
+.zatwierdz {
+  height: 30px;
+}
+
+.rejestracja,
+.logowanie {
+  display: none;
+  flex-direction: column;
+}
+
+.rejestracja---js,
+.logowanie---js {
+  display: flex;
 }
