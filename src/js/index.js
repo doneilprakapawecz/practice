@@ -8,8 +8,13 @@ import '../scss/main.scss';
 /* place your code below */
 
 console.log('HELLO 🚀')
+let id_uzytkownika = "";
+let stan_logowania = 0;
 
-
+function przerwij() {
+    document.querySelector(".rejestracja").classList.remove("rejestracja---js");
+    document.querySelector('.logowanie').classList.remove("logowanie---js");
+}
 
 const system_logowania = {
     imie: "daniel",
@@ -22,12 +27,17 @@ if (!localStorage.getItem("nickName")) {
 }
 const system = JSON.parse(localStorage.getItem("nickName"))
 
-
+document.querySelector(".przerwij--js").addEventListener('click', przerwij);
 
 const screen = document.querySelector('.screen--js')
 const rejestracja = document.querySelector('.rejestracja--js');
 rejestracja.addEventListener('click', () => {
-    document.querySelector(".rejestracja").classList.add("rejestracja---js");
+    if (stan_logowania == 0) {
+        przerwij();
+        document.querySelector(".rejestracja").classList.add("rejestracja---js");
+    } else {
+        alert('najpierw się wyloguj');
+    }
 });
 const button_zatwierdz = document.querySelector('.zatwierdz');
 const nick = document.querySelector('.nicko');
@@ -75,5 +85,55 @@ button_zatwierdz.addEventListener('click', () => {
         haslo1.value = "";
         haslo2.value = "";
     }
+
 });
-console.log(system);
+
+const logowanie__js = document.querySelector('.logowanie--js')
+logowanie__js.addEventListener('click', () => {
+    if (stan_logowania == 0) {
+        przerwij();
+        logowanie.classList.add("logowanie---js")
+    } else if (stan_logowania == 1) {
+        document.querySelector(".first-header").textContent = "project 1";
+        id_uzytkownika = "";
+        stan_logowania = 0;
+        logowanie__js.textContent = "zaloguj się";
+    }
+})
+
+
+const logowanie = document.querySelector('.logowanie');
+const nick_log = document.querySelector('.nicko-log');
+const haslo_log = document.querySelector('.haslo-log');
+const zaloguj = document.querySelector('.zaloguj');
+zaloguj.addEventListener('click', () => {
+    for (let i = 0; i < system.tablica.length; i++) {
+        if (nick_log.value === system.tablica[i].nazwa_uzytkownika) {
+            id_uzytkownika = i;
+
+        }
+    }
+    if (nick_log.value === "") alert('musisz podać nick');
+    if (haslo_log.value === "") alert('musisz podać hasło');
+    if (nick_log.value != "" && haslo_log.value != "") {
+        if (id_uzytkownika !== "") {
+            if (nick_log.value === system.tablica[id_uzytkownika].nazwa_uzytkownika &&
+                haslo_log.value === system.tablica[id_uzytkownika].haslo) {
+                document.querySelector(".first-header").textContent = nick_log.value;
+                logowanie__js.textContent = "wyloguj";
+                stan_logowania = 1;
+                nick_log.value = "";
+                haslo_log.value = "";
+                przerwij();
+            } else {
+                alert("nick lub hasło jest nieprawidłowe");
+                nick_log.value = "";
+                haslo_log.value = "";
+            }
+        } else {
+            alert("nick lub hasło jest nieprawidłowe");
+            nick_log.value = "";
+            haslo_log.value = "";
+        }
+    }
+})
